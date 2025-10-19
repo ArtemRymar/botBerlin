@@ -25,7 +25,7 @@ async def check_appointments():
         response = requests.get(URL, timeout=10)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
-        print(soup)
+        
 
         
         all_potential_headers = soup.find_all('h1', class_='title')
@@ -70,12 +70,12 @@ async def main():
     counter = 0
     while True:
         await check_appointments()
-        if counter % 17280 == 0: # every 24 hours if sleep is 5 sec
+        if counter % 2880 == 0: # every 24 hours if sleep is 5 sec
             for chat_id in CHAT_IDS:
                 await bot.send_message(chat_id=chat_id, text="✅ Бот работает. Проверки выполняются.")
 
         counter += 1
-        await asyncio.sleep(5) #every 10 seconds for testing
+        await asyncio.sleep(30) #every 30 seconds for testing
     
 
 if __name__ == "__main__":
